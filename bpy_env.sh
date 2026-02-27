@@ -12,7 +12,7 @@ if [ "$1" = "deactivate" ]; then
 else
     if [ ! -d "bpy_env" ]; then
         echo "Creating Python virtual environment in ./bpy_env"
-        python3 -m venv bpy_env
+        python -m venv bpy_env
     fi
     echo "Activating the environment"
     # shellcheck disable=SC1091

@@ -12,8 +12,9 @@ This repo contains two scripts to allow:
 
 The non shader ball geometry, cameras, and lights are all stripped away. As well no materials are saved.
 
-The `bpy_env` can be optionally used to setup a Python virtual environment
-and install `bpy`.
+A Python virtual environment can also be used.
+- On non-windows: `bpy_env.sh` sets up a virtual environment and installs `bpy`.
+- On Windoows: `bpy_env_win.bat` sets up a virtual environment and installs `bpy`.
 
 ### Example
 

@@ -12,6 +12,8 @@ def import_usd(filepath):
     # Ensure the USD importer is available
     if not hasattr(bpy.ops.wm, 'usd_import'):
         raise Exception("USD Import operator not found. Make sure the USD add-on is enabled.")
+    # Blender may have issues with relative paths, so we convert to absolute path
+    filepath = os.path.abspath(filepath)
     bpy.ops.wm.usd_import(filepath=filepath,
                           import_materials=False)
     
