@@ -62,6 +62,10 @@ with an example default OpenPBR material:
 
 Note that the script does not extract out the material from the original USD file though that could be added in the future.
 
-Below is an example using a material from PolyHaven:
+Below is an example using a material from PolyHaven
+using the same document but applied to different shader balls.
 
-![alt text](look_example.png)
+| USD Shader Ball | Arnold Shader Ball |
+| :--: | :--: |
+| <img width=100% src="look_example.png"> | <img width=100% src="look_example_2.png"> |
+
