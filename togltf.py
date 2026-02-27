@@ -88,10 +88,12 @@ def main():
     argparser = argparse.ArgumentParser(description="Convert USD to GLB using Blender")
     argparser.add_argument("--usd", type=str, default="./StandardShaderBall/full_assets/StandardShaderBall/standard_shader_ball_scene.usda", help="Path to the input USD file")
     argparser.add_argument("--glb", type=str, default="./standard_shader_ball_scene.glb", help="Path to the output GLB file")
+    argparser.add_argument("--blend", type=str, default="./standard_shader_ball_scene.blend", help="Path to the output Blender file (optional)")
     args = argparser.parse_args()
 
     USD_FILE_PATH = args.usd
     GLB_EXPORT_PATH = args.glb
+    BLENDER_FILE_PATH = args.blend
 
     # Geometry to remove
     REMOVE_NAME_PATTERN = ["grid", "back", "backplane", "backplane.001", "front", "right", "top", "left"]          # Names of meshes to remove (case‑insensitive)
@@ -112,6 +114,10 @@ def main():
 
     # 5. Export as GLB without materials
     export_glb_no_materials(GLB_EXPORT_PATH)
+
+    if BLENDER_FILE_PATH:
+        bpy.ops.wm.save_as_mainfile(filepath=BLENDER_FILE_PATH)
+        print(f"Blender file saved to:\n{BLENDER_FILE_PATH}")
 
     print(f"GLB exported successfully to:\n{GLB_EXPORT_PATH}")
 

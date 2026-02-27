@@ -20,5 +20,5 @@ echo "Want only: full_assets/StandardShaderBall/*"
 echo "full_assets/StandardShaderBall/*" >> .git/info/sparse-checkout
 
 # Pull the files from the remote
-ehoc "Pulling the specified files from the remote repository"
+echo "Pulling the specified files from the remote repository"
 git pull origin main
