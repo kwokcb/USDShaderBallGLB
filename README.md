@@ -24,3 +24,44 @@ The geometry with just the script conversion is shown below:
 | :--: | :--: |
 | <img width="80%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" /> |  <img width="100%" alt="Screenshot 2026-02-27 at 00 33 35" src="https://github.com/user-attachments/assets/a5e05164-eb07-4098-a508-5fe01138429d" /> |
 
+### MaterialX Look Settings
+
+The geometry in the glTF file can be assigned so that the main material to "preview" can be assigned to the outer shell
+and ring around the base. The rest can be assigned some "default" material. You can also assign to the "Arnold"shader ball using the same material assignments.
+
+Below is an example look with "base,"core","sss_bars" and "material_surface" the names of geometry in the USD shader ball,
+and "Calibration_Mesh" and "Preview_Mesh" the names of geometry in the Arnold shader ball: 
+
+```xml
+<look name="look1">
+<materialassign name="default" geom="base,core,sss_bars,Calibration_Mesh" material="MY_DEFAULT_MATERIAL" />
+ <materialassign name="preview" geom="material_surface,Preview_Mesh" material="MY_PREVIEW_MATERIAL" />
+</look>
+```
+
+with an example default OpenPBR material:
+
+```xml
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <surfacematerial name="MY_DEFAULT_MATERIAL" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="open_pbr_surface_surfaceshader" />
+  </surfacematerial>
+  <open_pbr_surface name="open_pbr_surface_surfaceshader" type="surfaceshader">
+    <input name="base_weight" type="float" value="1.0" />
+    <input name="base_color" type="color3" value="0.3, 0.3, 0.3" />
+    <input name="base_diffuse_roughness" type="float" value="0.2" />
+    <input name="base_metalness" type="float" value="0.0" />
+    <input name="specular_weight" type="float" value="0.1" />
+    <input name="specular_color" type="color3" value="1, 1, 1" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+</materialx>
+```
+
+Note that the script does not extract out the material from the original USD file though that could be added in the future.
+
+Below is an example using a material from PolyHaven:
+
+![alt text](look_example.png)
