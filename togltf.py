@@ -86,7 +86,7 @@ def transform_geometry_to_world():
 
 def main():
     argparser = argparse.ArgumentParser(description="Convert USD to GLB using Blender")
-    argparser.add_argument("--usd", type=str, default="./full_assets/StandardShaderBall/standard_shader_ball_scene.usda", help="Path to the input USD file")
+    argparser.add_argument("--usd", type=str, default="./StandardShaderBall/full_assets/StandardShaderBall/standard_shader_ball_scene.usda", help="Path to the input USD file")
     argparser.add_argument("--glb", type=str, default="./standard_shader_ball_scene.glb", help="Path to the output GLB file")
     args = argparser.parse_args()
 
