@@ -15,3 +15,9 @@ The non shader ball geometry, cameras, and lights are all stripped away. As well
 The `bpy_env` can be optionally used to setup a Python virtual environment
 and install `bpy`.
 
+### Example
+
+The geometry with just the script conversion is shown in the MaterialX Web Viewer (drag geometry into viewer)
+
+<img width="80%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" />
+
