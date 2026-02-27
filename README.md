@@ -17,7 +17,9 @@ and install `bpy`.
 
 ### Example
 
-The geometry with just the script conversion is shown in the MaterialX Web Viewer (drag geometry into viewer)
+The geometry with just the script conversion is shown below:
 
-<img width="80%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" />
+| MaterialX Web Viewer (drag geometry into viewer) | Blender |
+| :--: | :--: |
+| <img width="80%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" /> |  <img width="100%" alt="Screenshot 2026-02-27 at 00 33 35" src="https://github.com/user-attachments/assets/a5e05164-eb07-4098-a508-5fe01138429d" /> |
 
