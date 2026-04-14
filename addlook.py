@@ -84,7 +84,8 @@ def main():
 
             # Example:
             # python addlook.py ./StandardShaderBall/full_assets/StandardShaderBall/example_materials 
-            #   -r "MaterialXView --material %m --mesh %g --screenWidth 512 --screenHeight 512 --captureFilename %o" 
+            #   -r "MaterialXView --material %m --mesh %g --screenWidth 512 --screenHeight 512 --captureFilename %o
+            #       --cameraPosition 6.53154,14.5,17.9485 --cameraZoom 6" 
             #   --g ./standard_shader_ball_scene.glb
             if render_string:
                 # Fill in %g with GLB file name, and %m with material file name
