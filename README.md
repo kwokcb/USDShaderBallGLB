@@ -8,7 +8,7 @@ This repo contains two scripts to allow:
 ### Steps
 
 1. Use `usdball_download.sh` to clone only the shader ball scene into a new repo folder called `StandardShaderBall`.
-2. Use `togltf.py` from the root of that repo to create the GLB file called: `standard_shader_ball_scene.glb`
+2. Use `togltf.py` from the root of that repo to create the GLB file called: `standard_shader_ball_scene.glb`. Use the `--smooth` option if additional smoothing is desired for the surface material geometry.
 
 The non shader ball geometry, cameras, and lights are all stripped away. As well no materials are saved.
 
@@ -59,13 +59,40 @@ with an example default OpenPBR material:
   </open_pbr_surface>
 </materialx>
 ```
+### USD MaterialX Example Looks
 
-Note that the script does not extract out the material from the original USD file though that could be added in the future.
+Note that the script does not extract out the material from the original USD file though that could be added in the future. Current `USDPreviewSurface` materials are represented in USD only.
 
-Below is an example using a material from PolyHaven
+The remaining examples can be extracted and have looks added to it using the `addLook.py` script. There is an additional option to render using a user provided render string argument such that
+- `%g` is replaced by the geometry file name
+- `%m` is replaced by the Materialx file name
+- `%o` is replaced by the output image name         
+
+Below is an example using `MaterialXView` to add looks and render all the example MaterialX materials found in the USD asset.
+
+```shell
+addlook.py ./StandardShaderBall/full_assets/StandardShaderBall/example_materials -r "MaterialXView --material %m --mesh %g --screenWidth 480 --screenHeight 480 --captureFilename %o  --cameraPosition 7.5,17.0,17.0 --cameraZoom 6 --shadowMap true --lightRotation 20 --screenColor 0.6,0.6,0.6" --g ./standard_shader_ball_scene_smooth.glb -o example_materials
+```
+Results are shown in section: Rendered Example Materials
+
+This can be used to add looks and render with any input with a material.
+
+Below is an example using a material from `PolyHaven`
 using the same document but applied to different shader balls.
 
 | USD Shader Ball | Arnold Shader Ball |
 | :--: | :--: |
 | <img width=100% src="look_example.png"> | <img width=100% src="look_example_2.png"> |
 
+### Rendered Example Materials
+
+| Look | Result |
+| :--: | :--: |
+| Standard Surface Plastic | <img alt="plastic" src="https://github.com/user-attachments/assets/e46ff9a9-2637-442f-8d8f-2b789ccdf16e" /> |
+| OpenPBR Plastic | <img alt="plastic_openpbr" src="https://github.com/user-attachments/assets/fb6e1b67-5911-41de-b6e4-d9afe1e9d182" /> | 
+| Standard Surface Bubblegum | <img alt="bubblegum" src="https://github.com/user-attachments/assets/96cc5f22-3a1e-486e-8812-eadbc9f35ba9" /> |
+| OpenPBR Bubblegum |  <img  alt="bubblegum_openpbr" src="https://github.com/user-attachments/assets/923f97ca-edfd-40aa-9ebd-83d406e4de46" /> |
+| Standard Surface Glass | <img  alt="glass" src="https://github.com/user-attachments/assets/0ce59c1a-78fc-413a-8237-d698a81364c3" /> |
+|  OpenPBR Glass |  <img alt="glass_openpbr" src="https://github.com/user-attachments/assets/4e98f417-f9bd-49a4-b640-499481a63c21" /> |
+| Standard Surface Gold | <img  alt="gold" src="https://github.com/user-attachments/assets/e0fd9442-8474-4307-9b8d-48564fc6f8a3" /> |
+| OpenPBR Gold |  <img alt="gold_openpbr" src="https://github.com/user-attachments/assets/e83f403b-3f31-4c52-b9e9-8822e82454e5" /> |
