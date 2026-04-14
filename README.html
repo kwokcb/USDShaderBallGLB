@@ -346,7 +346,7 @@ code {
 	font-size: inherit;
 }
 
-/* Page Break : use <div class="page"/> to insert page break
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
 -------------------------------------------------------- */
 .page {
 	page-break-after: always;
@@ -374,7 +374,7 @@ code {
 <h3 id="steps">Steps</h3>
 <ol>
 <li>Use <code>usdball_download.sh</code> to clone only the shader ball scene into a new repo folder called <code>StandardShaderBall</code>.</li>
-<li>Use <code>togltf.py</code> from the root of that repo to create the GLB file called: <code>standard_shader_ball_scene.glb</code></li>
+<li>Use <code>togltf.py</code> from the root of that repo to create the GLB file called: <code>standard_shader_ball_scene.glb</code>. Use the <code>--smooth</code> option if additional smoothing is desired for the surface material geometry.</li>
 </ol>
 <p>The non shader ball geometry, cameras, and lights are all stripped away. As well no materials are saved.</p>
 <p>A Python virtual environment can also be used.</p>
@@ -399,35 +399,47 @@ code {
 </tbody>
 </table>
 <h3 id="materialx-look-settings">MaterialX Look Settings</h3>
-<p>The geometry in the glTF file can be assigned so that the main material to &quot;preview&quot; can be assigned to the outer shell<br>
+<p>The geometry in the glTF file can be assigned so that the main material to &quot;preview&quot; can be assigned to the outer shell
 and ring around the base. The rest can be assigned some &quot;default&quot; material. You can also assign to the &quot;Arnold&quot;shader ball using the same material assignments.</p>
-<p>Below is an example look with &quot;base,&quot;core&quot;,&quot;sss_bars&quot; and &quot;material_surface&quot; the names of geometry in the USD shader ball,<br>
+<p>Below is an example look with &quot;base,&quot;core&quot;,&quot;sss_bars&quot; and &quot;material_surface&quot; the names of geometry in the USD shader ball,
 and &quot;Calibration_Mesh&quot; and &quot;Preview_Mesh&quot; the names of geometry in the Arnold shader ball:</p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">look</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"look1"</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">materialassign</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"default"</span> <span class="hljs-attr">geom</span>=<span class="hljs-string">"base,core,sss_bars,Calibration_Mesh"</span> <span class="hljs-attr">material</span>=<span class="hljs-string">"MY_DEFAULT_MATERIAL"</span> /&gt;</span>
- <span class="hljs-tag">&lt;<span class="hljs-name">materialassign</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"preview"</span> <span class="hljs-attr">geom</span>=<span class="hljs-string">"material_surface,Preview_Mesh"</span> <span class="hljs-attr">material</span>=<span class="hljs-string">"MY_PREVIEW_MATERIAL"</span> /&gt;</span>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">look</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;look1&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">materialassign</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;default&quot;</span> <span class="hljs-attr">geom</span>=<span class="hljs-string">&quot;base,core,sss_bars,Calibration_Mesh&quot;</span> <span class="hljs-attr">material</span>=<span class="hljs-string">&quot;MY_DEFAULT_MATERIAL&quot;</span> /&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-name">materialassign</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;preview&quot;</span> <span class="hljs-attr">geom</span>=<span class="hljs-string">&quot;material_surface,Preview_Mesh&quot;</span> <span class="hljs-attr">material</span>=<span class="hljs-string">&quot;MY_PREVIEW_MATERIAL&quot;</span> /&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">look</span>&gt;</span>
 </div></code></pre>
 <p>with an example default OpenPBR material:</p>
-<pre class="hljs"><code><div><span class="hljs-meta">&lt;?xml version="1.0"?&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">materialx</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"1.39"</span> <span class="hljs-attr">colorspace</span>=<span class="hljs-string">"lin_rec709"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">surfacematerial</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"MY_DEFAULT_MATERIAL"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"material"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"surfaceshader"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"surfaceshader"</span> <span class="hljs-attr">nodename</span>=<span class="hljs-string">"open_pbr_surface_surfaceshader"</span> /&gt;</span>
+<pre class="hljs"><code><div><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span>?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">materialx</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;1.39&quot;</span> <span class="hljs-attr">colorspace</span>=<span class="hljs-string">&quot;lin_rec709&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">surfacematerial</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;MY_DEFAULT_MATERIAL&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;material&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;surfaceshader&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;surfaceshader&quot;</span> <span class="hljs-attr">nodename</span>=<span class="hljs-string">&quot;open_pbr_surface_surfaceshader&quot;</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">surfacematerial</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">open_pbr_surface</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"open_pbr_surface_surfaceshader"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"surfaceshader"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"base_weight"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"float"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1.0"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"base_color"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"color3"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"0.3, 0.3, 0.3"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"base_diffuse_roughness"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"float"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"0.2"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"base_metalness"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"float"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"0.0"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"specular_weight"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"float"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"0.1"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"specular_color"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"color3"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1, 1, 1"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"specular_roughness"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"float"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"0.5"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"specular_ior"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"float"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1.5"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">open_pbr_surface</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;open_pbr_surface_surfaceshader&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;surfaceshader&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;base_weight&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1.0&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;base_color&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;color3&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;0.3, 0.3, 0.3&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;base_diffuse_roughness&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;0.2&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;base_metalness&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;0.0&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;specular_weight&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;0.1&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;specular_color&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;color3&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1, 1, 1&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;specular_roughness&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;0.5&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;specular_ior&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1.5&quot;</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">open_pbr_surface</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">materialx</span>&gt;</span>
 </div></code></pre>
-<p>Note that the script does not extract out the material from the original USD file though that could be added in the future.</p>
-<p>Below is an example using a material from PolyHaven<br>
+<h3 id="usd-materialx-example-looks">USD MaterialX Example Looks</h3>
+<p>Note that the script does not extract out the material from the original USD file though that could be added in the future. Current <code>USDPreviewSurface</code> materials are represented in USD only.</p>
+<p>The remaining examples can be extracted and have looks added to it using the <code>addLook.py</code> script. There is an additional option to render using a user provided render string argument such that</p>
+<ul>
+<li><code>%g</code> is replaced by the geometry file name</li>
+<li><code>%m</code> is replaced by the Materialx file name</li>
+<li><code>%o</code> is replaced by the output image name</li>
+</ul>
+<p>Below is an example using <code>MaterialXView</code> to add looks and render all the example MaterialX materials found in the USD asset.</p>
+<pre class="hljs"><code><div>addlook.py ./StandardShaderBall/full_assets/StandardShaderBall/example_materials -r &quot;MaterialXView --material %m --mesh %g --screenWidth 480 --screenHeight 480 --captureFilename %o  --cameraPosition 7.5,17.0,17.0 --cameraZoom 6 --shadowMap true --lightRotation 20 --screenColor 0.6,0.6,0.6&quot; --g ./standard_shader_ball_scene_smooth.glb -o example_materials
+</div></code></pre>
+<p>Results are shown in section: Rendered Example Materials</p>
+<p>This can be used to add looks and render with any input with a material.</p>
+<p>Below is an example using a material from <code>PolyHaven</code>
 using the same document but applied to different shader balls.</p>
 <table>
 <thead>
@@ -440,6 +452,49 @@ using the same document but applied to different shader balls.</p>
 <tr>
 <td style="text-align:center"><img width=100% src="look_example.png"></td>
 <td style="text-align:center"><img width=100% src="look_example_2.png"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="rendered-example-materials">Rendered Example Materials</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Look</th>
+<th style="text-align:center">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Standard Surface Plastic</td>
+<td style="text-align:center"><img alt="plastic" src="https://github.com/user-attachments/assets/e46ff9a9-2637-442f-8d8f-2b789ccdf16e" /></td>
+</tr>
+<tr>
+<td style="text-align:center">OpenPBR Plastic</td>
+<td style="text-align:center"><img alt="plastic_openpbr" src="https://github.com/user-attachments/assets/fb6e1b67-5911-41de-b6e4-d9afe1e9d182" /></td>
+</tr>
+<tr>
+<td style="text-align:center">Standard Surface Bubblegum</td>
+<td style="text-align:center"><img alt="bubblegum" src="https://github.com/user-attachments/assets/96cc5f22-3a1e-486e-8812-eadbc9f35ba9" /></td>
+</tr>
+<tr>
+<td style="text-align:center">OpenPBR Bubblegum</td>
+<td style="text-align:center"><img  alt="bubblegum_openpbr" src="https://github.com/user-attachments/assets/923f97ca-edfd-40aa-9ebd-83d406e4de46" /></td>
+</tr>
+<tr>
+<td style="text-align:center">Standard Surface Glass</td>
+<td style="text-align:center"><img  alt="glass" src="https://github.com/user-attachments/assets/0ce59c1a-78fc-413a-8237-d698a81364c3" /></td>
+</tr>
+<tr>
+<td style="text-align:center">OpenPBR Glass</td>
+<td style="text-align:center"><img alt="glass_openpbr" src="https://github.com/user-attachments/assets/4e98f417-f9bd-49a4-b640-499481a63c21" /></td>
+</tr>
+<tr>
+<td style="text-align:center">Standard Surface Gold</td>
+<td style="text-align:center"><img  alt="gold" src="https://github.com/user-attachments/assets/e0fd9442-8474-4307-9b8d-48564fc6f8a3" /></td>
+</tr>
+<tr>
+<td style="text-align:center">OpenPBR Gold</td>
+<td style="text-align:center"><img alt="gold_openpbr" src="https://github.com/user-attachments/assets/e83f403b-3f31-4c52-b9e9-8822e82454e5" /></td>
 </tr>
 </tbody>
 </table>
