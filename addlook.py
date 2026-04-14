@@ -22,7 +22,7 @@ def add_default_material(doc, materialName, shader_category='standard_surface'):
     shader_name = doc.createValidChildName('shader_' + materialName)
     shader = doc.addNode(shader_category, shader_name, 'surfaceshader')
     shader_input = shader.addInput('base_color', 'color3')
-    shader_input.setValue(mx.Color3(0.8, 0.8, 0.8))
+    shader_input.setValue(mx.Color3(0.2, 0.2, 0.2))
     shader_input = shader.addInput('specular_roughness', 'float')
     shader_input.setValue(1.0)
     input = material.addInput('surfaceshader','surfaceshader')
