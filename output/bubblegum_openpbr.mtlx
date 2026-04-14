@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <open_pbr_surface name="open_pbr_surface" type="surfaceshader">
+    <input name="subsurface_weight" type="float" value="1" />
+    <input name="specular_weight" type="float" value="0.383" />
+    <input name="specular_roughness" type="float" value="0.176" />
+    <input name="specular_ior" type="float" value="1.584" />
+    <input name="subsurface_color" type="color3" value="1, 0.22, 0.493" />
+    <input name="subsurface_radius_scale" type="color3" value="1, 0, 0.068" />
+    <input name="subsurface_radius" type="float" value="0.0325" />
+  </open_pbr_surface>
+  <surfacematerial name="bubblegum" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="open_pbr_surface" />
+  </surfacematerial>
+  <surfacematerial name="default" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_default" />
+  </surfacematerial>
+  <standard_surface name="shader_default" type="surfaceshader" />
+  <look name="look">
+    <materialassign name="default" material="default" geom="base,core,sss_bars,Calibration_Mesh" />
+    <materialassign name="preview" material="bubblegum" geom="material_surface,Preview_Mesh" />
+  </look>
+</materialx>
