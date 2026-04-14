@@ -96,3 +96,7 @@ using the same document but applied to different shader balls.
 |  OpenPBR Glass |  <img alt="glass_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass_openpbr.png?raw=true" /> |
 | Standard Surface Gold | <img  alt="gold" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold.png?raw=true" /> |
 | OpenPBR Gold |  <img alt="gold_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold_openpbr.png?raw=true" /> |
+
+### Rendered MaterialX Example Materials
+
+The `glTF`, `OpenPBR` and `Autodesk Standard Surface` example materials have also be rendered and can be found in the `*_1.39.5` subfolders in the repository.
