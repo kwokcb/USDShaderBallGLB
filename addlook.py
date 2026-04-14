@@ -19,10 +19,16 @@ def add_default_material(doc, materialName, shader_category='standard_surface'):
     # Create a default material for the material.
     material_name = doc.createValidChildName(materialName)
     material = doc.addMaterialNode(material_name)
-    input = material.addInput('surfaceshader','surfaceshader')
     shader_name = doc.createValidChildName('shader_' + materialName)
     shader = doc.addNode(shader_category, shader_name, 'surfaceshader')
+    shader_input = shader.addInput('base_color', 'color3')
+    shader_input.setValue(mx.Color3(0.8, 0.8, 0.8))
+    shader_input = shader.addInput('specular_roughness', 'float')
+    shader_input.setValue(1.0)
+    input = material.addInput('surfaceshader','surfaceshader')
     input.setConnectedNode(shader)
+
+
     return material
 
 def find_materials(doc):
@@ -33,11 +39,20 @@ def main():
     parser.add_argument(dest='inputFolder', help='Path containing MaterialX files to convert.')
     parser.add_argument('-d', '--defaultShaderCategory', dest='defaultShaderCategory', type=str, default='standard_surface', help="Shader category to use for the default material (default: 'standard_surface')  ")
     parser.add_argument('-o', '--outputFolder', dest='outputFolder', type=str, default="./output", help="Path to the output folder")
+    parser.add_argument('-r', '-renderString', dest='renderString', type=str, help="Render the materials")
+    parser.add_argument('-g', '--geometryFile', dest='geometryFile', type=str, help="Path to the geometry file to use for rendering")
 
     args = parser.parse_args()
     input_folder = args.inputFolder
     output_folder = args.outputFolder
     default_shader_category = args.defaultShaderCategory
+    render_string = args.renderString
+
+    geometry_file = args.geometryFile
+    if render_string:
+        if not geometry_file or not os.path.exists(geometry_file):
+            print('Geometry file is required for rendering and must exist:', geometry_file)
+            exit(-1)
 
     # create output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
@@ -65,7 +80,24 @@ def main():
 
             print('Writing output file:', output_path)
             mx.writeToXmlFile(doc, output_path)
-            
+
+
+            # Example:
+            # python addlook.py ./StandardShaderBall/full_assets/StandardShaderBall/example_materials 
+            #   -r "MaterialXView --material %m --mesh %g --screenWidth 512 --screenHeight 512 --captureFilename %o" 
+            #   --g ./standard_shader_ball_scene.glb
+            if render_string:
+                # Fill in %g with GLB file name, and %m with material file name
+                render_command = render_string.replace('%g', geometry_file)
+                render_command = render_command.replace('%m', output_path)
+                # Fill in %o with output image file name (same as material file name but with .png extension)
+                output_image_path = os.path.splitext(output_path)[0] + '.png'
+                render_command = render_command.replace('%o', output_image_path)
+                print('Rendering with command:', render_command)
+                try:
+                    os.system(render_command)
+                except Exception as e:
+                    print('Error occurred while rendering:', e)
 
 if __name__ == "__main__":
     main()
