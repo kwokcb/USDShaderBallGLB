@@ -371,7 +371,7 @@ code {
 <li>Cloning the current USD Standard Shader Ball scene only.</li>
 <li>Converting the scene used Blender (bpy) to output a glTF (GLB) file.</li>
 </ol>
-<h3 id="steps">Steps</h3>
+<h3 id="1-steps">1. Steps</h3>
 <ol>
 <li>Use <code>usdball_download.sh</code> to clone only the shader ball scene into a new repo folder called <code>StandardShaderBall</code>.</li>
 <li>Use <code>togltf.py</code> from the root of that repo to create the GLB file called: <code>standard_shader_ball_scene.glb</code>. Use the <code>--smooth</code> option if additional smoothing is desired for the surface material geometry.</li>
@@ -382,7 +382,7 @@ code {
 <li>On non-windows: <code>bpy_env.sh</code> sets up a virtual environment and installs <code>bpy</code>.</li>
 <li>On Windoows: <code>bpy_env_win.bat</code> sets up a virtual environment and installs <code>bpy</code>.</li>
 </ul>
-<h3 id="example">Example</h3>
+<h4 id="11-example">1.1 Example</h4>
 <p>The geometry with just the script conversion is shown below:</p>
 <table>
 <thead>
@@ -393,14 +393,13 @@ code {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><img width="80%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" /></td>
+<td style="text-align:center"><img width="65%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" /></td>
 <td style="text-align:center"><img width="100%" alt="Screenshot 2026-02-27 at 00 33 35" src="https://github.com/user-attachments/assets/a5e05164-eb07-4098-a508-5fe01138429d" /></td>
 </tr>
 </tbody>
 </table>
-<h3 id="materialx-look-settings">MaterialX Look Settings</h3>
-<p>The geometry in the glTF file can be assigned so that the main material to &quot;preview&quot; can be assigned to the outer shell
-and ring around the base. The rest can be assigned some &quot;default&quot; material. You can also assign to the &quot;Arnold&quot;shader ball using the same material assignments.</p>
+<h3 id="2-using-materialx-looks">2. Using MaterialX Looks</h3>
+<p>The geometry in the glTF file can be assigned so that the main material to &quot;preview&quot; can be assigned to the outer shell and ring around the base. The rest can be assigned some &quot;default&quot; material. You can also assign to the &quot;Arnold&quot;shader ball using the same material assignments.</p>
 <p>Below is an example look with &quot;base,&quot;core&quot;,&quot;sss_bars&quot; and &quot;material_surface&quot; the names of geometry in the USD shader ball,
 and &quot;Calibration_Mesh&quot; and &quot;Preview_Mesh&quot; the names of geometry in the Arnold shader ball:</p>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">look</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;look1&quot;</span>&gt;</span>
@@ -426,21 +425,66 @@ and &quot;Calibration_Mesh&quot; and &quot;Preview_Mesh&quot; the names of geome
   <span class="hljs-tag">&lt;/<span class="hljs-name">open_pbr_surface</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">materialx</span>&gt;</span>
 </div></code></pre>
-<h3 id="usd-materialx-example-looks">USD MaterialX Example Looks</h3>
-<p>Note that the script does not extract out the material from the original USD file though that could be added in the future. Current <code>USDPreviewSurface</code> materials are represented in USD only.</p>
-<p>The remaining examples can be extracted and have looks added to it using the <code>addLook.py</code> script. There is an additional option to render using a user provided render string argument such that</p>
+<h4 id="21-usdpreviewsurface-materials">2.1 UsdPreviewSurface Materials</h4>
+<p>The <code>togltf</code> script does not currently extract out the <code>USDPreviewSurface</code> materials from the USD asset to avoid having to build or install a USD release.</p>
+<h4 id="22-materialx-look-assignments">2.2 MaterialX Look Assignments</h4>
+<p>The remaining USD asset examples can be extracted and have looks added to it using the <code>addLook.py</code> script.</p>
+<p>The script can also perform rendering as specified by a user defined render string argument such that:</p>
 <ul>
 <li><code>%g</code> is replaced by the geometry file name</li>
 <li><code>%m</code> is replaced by the Materialx file name</li>
 <li><code>%o</code> is replaced by the output image name</li>
+<li><code>%p</code> is replaced by the path to the source content to aid in resolving image references.</li>
 </ul>
-<p>Below is an example using <code>MaterialXView</code> to add looks and render all the example MaterialX materials found in the USD asset.</p>
+<h4 id="23-usd-asset-examples">2.3 USD Asset Examples</h4>
+<p>Below is an example which iterates over all MaterialX documents in the USD asset and creates new documents with the appropriate looks which are then rendered using a release version of <code>MaterialXView</code>.</p>
 <pre class="hljs"><code><div>addlook.py ./StandardShaderBall/full_assets/StandardShaderBall/example_materials -r &quot;MaterialXView --material %m --mesh %g --screenWidth 480 --screenHeight 480 --captureFilename %o  --cameraPosition 7.5,17.0,17.0 --cameraZoom 6 --shadowMap true --lightRotation 20 --screenColor 0.6,0.6,0.6&quot; --g ./standard_shader_ball_scene_smooth.glb -o example_materials
 </div></code></pre>
-<p>Results are shown in section: Rendered Example Materials</p>
-<p>This can be used to add looks and render with any input with a material.</p>
-<p>Below is an example using a material from <code>PolyHaven</code>
-using the same document but applied to different shader balls.</p>
+<p>Results of executing this script are shown below:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Material</th>
+<th style="text-align:center">Standard Surface</th>
+<th style="text-align:center">OpenPBR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Surface Plastic</td>
+<td style="text-align:center"><img alt="plastic" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic.png?raw=true" /></td>
+<td style="text-align:center"><img alt="plastic_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic_openpbr.png?raw=true" /></td>
+</tr>
+<tr>
+<td style="text-align:center">Surface Bubblegum</td>
+<td style="text-align:center"><img src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum.png?raw=true"></td>
+<td style="text-align:center"><img  alt="bubblegum_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum_openpbr.png?raw=true" /></td>
+</tr>
+<tr>
+<td style="text-align:center">Glass</td>
+<td style="text-align:center"><img  alt="glass" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass.png?raw=true" /></td>
+<td style="text-align:center"><img alt="glass_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass_openpbr.png?raw=true" /></td>
+</tr>
+<tr>
+<td style="text-align:center">Gold</td>
+<td style="text-align:center"><img  alt="gold" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold.png?raw=true" /></td>
+<td style="text-align:center"><img alt="gold_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold_openpbr.png?raw=true" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="24-rendering-materialx-examples">2.4 Rendering MaterialX Examples</h4>
+<p>The <code>glTF</code>, <code>OpenPBR</code> and <code>Autodesk Standard Surface</code> release sample materials have been rendered using this script. The resulting
+MaterialX documents and rendered images can be found in the <code>*_1.39.5</code> subfolders in the repository:</p>
+<ul>
+<li><a href="OpenPbr_1.39.5_gallery.md">OpenPBR Gallery</a></li>
+<li><a href="StandardSurface_1.39.5_gallery.md">Standard Surface Gallery</a></li>
+<li><a href="GltfPbr_1.39.5_gallery.md">glTF Gallery</a></li>
+<li><a href="UsdPreviewSurface_1.39.5_gallery.md">UsdPreview Gallery</a></li>
+<li><a href="DisneyPrincipled_1.39.5_gallery.md">Disney Principled Gallery</a>)</li>
+</ul>
+<h4 id="25-rendering-general-material-assets">2.5 Rendering General Material Assets</h4>
+<p>The script is generic enough to add looks and render arbitrary MaterialX documents containing materials.</p>
+<p>Below is an example using a material from <code>PolyHaven</code> using the same MaterialX document but applied to different shader ball geometry.</p>
 <table>
 <thead>
 <tr>
@@ -455,51 +499,7 @@ using the same document but applied to different shader balls.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="rendered-example-materials">Rendered Example Materials</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Look</th>
-<th style="text-align:center">Result</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Standard Surface Plastic</td>
-<td style="text-align:center"><img alt="plastic" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic.png?raw=true" /></td>
-</tr>
-<tr>
-<td style="text-align:center">OpenPBR Plastic</td>
-<td style="text-align:center"><img alt="plastic_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic_openpbr.png?raw=true" /></td>
-</tr>
-<tr>
-<td style="text-align:center">Standard Surface Bubblegum</td>
-<td style="text-align:center"><img src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum.png?raw=true"></td>
-</tr>
-<tr>
-<td style="text-align:center">OpenPBR Bubblegum</td>
-<td style="text-align:center"><img  alt="bubblegum_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum_openpbr.png?raw=true" /></td>
-</tr>
-<tr>
-<td style="text-align:center">Standard Surface Glass</td>
-<td style="text-align:center"><img  alt="glass" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass.png?raw=true" /></td>
-</tr>
-<tr>
-<td style="text-align:center">OpenPBR Glass</td>
-<td style="text-align:center"><img alt="glass_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass_openpbr.png?raw=true" /></td>
-</tr>
-<tr>
-<td style="text-align:center">Standard Surface Gold</td>
-<td style="text-align:center"><img  alt="gold" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold.png?raw=true" /></td>
-</tr>
-<tr>
-<td style="text-align:center">OpenPBR Gold</td>
-<td style="text-align:center"><img alt="gold_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold_openpbr.png?raw=true" /></td>
-</tr>
-</tbody>
-</table>
-<h3 id="rendered-materialx-example-materials">Rendered MaterialX Example Materials</h3>
-<p>The <code>glTF</code>, <code>OpenPBR</code> and <code>Autodesk Standard Surface</code> example materials have also be rendered and can be found in the <code>*_1.39.5</code> subfolders in the repository.</p>
+<hr>
 
 </body>
 </html>
