@@ -5,7 +5,7 @@ This repo contains two scripts to allow:
 1. Cloning the current USD Standard Shader Ball scene only.
 2. Converting the scene used Blender (bpy) to output a glTF (GLB) file.
 
-### Steps
+### 1. Steps
 
 1. Use `usdball_download.sh` to clone only the shader ball scene into a new repo folder called `StandardShaderBall`.
 2. Use `togltf.py` from the root of that repo to create the GLB file called: `standard_shader_ball_scene.glb`. Use the `--smooth` option if additional smoothing is desired for the surface material geometry.
@@ -16,18 +16,17 @@ A Python virtual environment can also be used.
 - On non-windows: `bpy_env.sh` sets up a virtual environment and installs `bpy`.
 - On Windoows: `bpy_env_win.bat` sets up a virtual environment and installs `bpy`.
 
-### Example
+#### 1.1 Example
 
 The geometry with just the script conversion is shown below:
 
 | MaterialX Web Viewer (drag geometry into viewer) | Blender |
 | :--: | :--: |
-| <img width="80%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" /> |  <img width="100%" alt="Screenshot 2026-02-27 at 00 33 35" src="https://github.com/user-attachments/assets/a5e05164-eb07-4098-a508-5fe01138429d" /> |
+| <img width="65%" alt="image" src="https://github.com/user-attachments/assets/97ad1adc-7515-44db-8d49-313c4d52a94a" /> |  <img width="100%" alt="Screenshot 2026-02-27 at 00 33 35" src="https://github.com/user-attachments/assets/a5e05164-eb07-4098-a508-5fe01138429d" /> |
 
-### MaterialX Look Settings
+### 2. Using MaterialX Looks
 
-The geometry in the glTF file can be assigned so that the main material to "preview" can be assigned to the outer shell
-and ring around the base. The rest can be assigned some "default" material. You can also assign to the "Arnold"shader ball using the same material assignments.
+The geometry in the glTF file can be assigned so that the main material to "preview" can be assigned to the outer shell and ring around the base. The rest can be assigned some "default" material. You can also assign to the "Arnold"shader ball using the same material assignments.
 
 Below is an example look with "base,"core","sss_bars" and "material_surface" the names of geometry in the USD shader ball,
 and "Calibration_Mesh" and "Preview_Mesh" the names of geometry in the Arnold shader ball: 
@@ -59,44 +58,60 @@ with an example default OpenPBR material:
   </open_pbr_surface>
 </materialx>
 ```
-### USD MaterialX Example Looks
+#### 2.1 UsdPreviewSurface Materials
 
-Note that the script does not extract out the material from the original USD file though that could be added in the future. Current `USDPreviewSurface` materials are represented in USD only.
+The `togltf` script does not currently extract out the `USDPreviewSurface` materials from the USD asset to avoid having to build or install a USD release.  
 
-The remaining examples can be extracted and have looks added to it using the `addLook.py` script. There is an additional option to render using a user provided render string argument such that
+#### 2.2 MaterialX Look Assignments
+
+The remaining USD asset examples can be extracted and have looks added to it using the `addLook.py` script. 
+
+The script can also perform rendering as specified by a user defined render string argument such that:
 - `%g` is replaced by the geometry file name
 - `%m` is replaced by the Materialx file name
-- `%o` is replaced by the output image name         
+- `%o` is replaced by the output image name
+- `%p` is replaced by the path to the source content to aid in resolving image references.
 
-Below is an example using `MaterialXView` to add looks and render all the example MaterialX materials found in the USD asset.
+#### 2.3 USD Asset Examples
+
+Below is an example which iterates over all MaterialX documents in the USD asset and creates new documents with the appropriate looks which are then rendered using a release version of `MaterialXView`.
 
 ```shell
 addlook.py ./StandardShaderBall/full_assets/StandardShaderBall/example_materials -r "MaterialXView --material %m --mesh %g --screenWidth 480 --screenHeight 480 --captureFilename %o  --cameraPosition 7.5,17.0,17.0 --cameraZoom 6 --shadowMap true --lightRotation 20 --screenColor 0.6,0.6,0.6" --g ./standard_shader_ball_scene_smooth.glb -o example_materials
 ```
-Results are shown in section: Rendered Example Materials
+Results of executing this script are shown below:
 
-This can be used to add looks and render with any input with a material.
+| Material | Standard Surface | OpenPBR | 
+| :--: | :--: | :--: |
+| Surface Plastic | <img alt="plastic" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic.png?raw=true" /> | <img alt="plastic_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic_openpbr.png?raw=true" /> | 
+| Surface Bubblegum | <img src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum.png?raw=true"> |  <img  alt="bubblegum_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum_openpbr.png?raw=true" /> |
+| Glass | <img  alt="glass" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass.png?raw=true" /> |  <img alt="glass_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass_openpbr.png?raw=true" /> |
+| Gold | <img  alt="gold" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold.png?raw=true" /> |   <img alt="gold_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold_openpbr.png?raw=true" /> |
 
-Below is an example using a material from `PolyHaven`
-using the same document but applied to different shader balls.
+#### 2.4 Rendering MaterialX Examples
+
+The `glTF`, `OpenPBR` and `Autodesk Standard Surface` release sample materials have been rendered using this script. The resulting 
+MaterialX documents and rendered images can be found in the `*_1.39.5` subfolders in the repository:
+
+- [OpenPBR Gallery](OpenPbr_1.39.5_gallery.md) 
+- [Standard Surface Gallery](StandardSurface_1.39.5_gallery.md)
+- [glTF Gallery](GltfPbr_1.39.5_gallery.md)
+- [UsdPreview Gallery](UsdPreviewSurface_1.39.5_gallery.md)
+- [Disney Principled Gallery](DisneyPrincipled_1.39.5_gallery.md))
+
+
+#### 2.5 Rendering General Material Assets
+
+The script is generic enough to add looks and render arbitrary MaterialX documents containing materials.
+
+Below is an example using a material from `PolyHaven` using the same MaterialX document but applied to different shader ball geometry.
 
 | USD Shader Ball | Arnold Shader Ball |
 | :--: | :--: |
 | <img width=100% src="look_example.png"> | <img width=100% src="look_example_2.png"> |
 
-### Rendered Example Materials
+---
 
-| Look | Result |
-| :--: | :--: |
-| Standard Surface Plastic | <img alt="plastic" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic.png?raw=true" /> |
-| OpenPBR Plastic | <img alt="plastic_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic_openpbr.png?raw=true" /> | 
-| Standard Surface Bubblegum | <img src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum.png?raw=true"> |
-| OpenPBR Bubblegum |  <img  alt="bubblegum_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum_openpbr.png?raw=true" /> |
-| Standard Surface Glass | <img  alt="glass" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass.png?raw=true" /> |
-|  OpenPBR Glass |  <img alt="glass_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass_openpbr.png?raw=true" /> |
-| Standard Surface Gold | <img  alt="gold" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold.png?raw=true" /> |
-| OpenPBR Gold |  <img alt="gold_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold_openpbr.png?raw=true" /> |
 
-### Rendered MaterialX Example Materials
 
-The `glTF`, `OpenPBR` and `Autodesk Standard Surface` example materials have also be rendered and can be found in the `*_1.39.5` subfolders in the repository.
+
