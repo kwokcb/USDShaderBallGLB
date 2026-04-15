@@ -83,10 +83,10 @@ Results of executing this script are shown below:
 
 | Material | Standard Surface | OpenPBR | 
 | :--: | :--: | :--: |
-| Surface Plastic | <img alt="plastic" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic.png?raw=true" /> | <img alt="plastic_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/plastic_openpbr.png?raw=true" /> | 
-| Surface Bubblegum | <img src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum.png?raw=true"> |  <img  alt="bubblegum_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/bubblegum_openpbr.png?raw=true" /> |
-| Glass | <img  alt="glass" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass.png?raw=true" /> |  <img alt="glass_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/glass_openpbr.png?raw=true" /> |
-| Gold | <img  alt="gold" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold.png?raw=true" /> |   <img alt="gold_openpbr" src="https://github.com/kwokcb/USDShaderBallGLB/blob/main/example_materials/gold_openpbr.png?raw=true" /> |
+| Surface Plastic | <img alt="plastic" src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/plastic.png" /> | <img alt="plastic_openpbr" src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/plastic_openpbr.png" /> | 
+| Surface Bubblegum | <img src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/bubblegum.png"> |  <img  alt="bubblegum_openpbr" src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/bubblegum_openpbr.png" /> |
+| Glass | <img  alt="glass" src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/glass.png" /> |  <img alt="glass_openpbr" src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/glass_openpbr.png" /> |
+| Gold | <img  alt="gold" src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/gold.png" /> |   <img alt="gold_openpbr" src="https://raw.githubusercontent.com/kwokcb/USDShaderBallGLB/refs/heads/main/docs/example_materials/gold_openpbr.png" /> |
 
 #### 2.4 Rendering MaterialX Examples
 
