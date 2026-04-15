@@ -93,10 +93,10 @@ Results of executing this script are shown below:
 The `glTF`, `OpenPBR` and `Autodesk Standard Surface` release sample materials have been rendered using this script. The resulting 
 MaterialX documents and rendered images can be found in the `*_1.39.5` subfolders in the repository:
 
-- [OpenPBR Gallery](OpenPbr_1.39.5_gallery.md) 
-- [Standard Surface Gallery](StandardSurface_1.39.5_gallery.md)
-- [glTF Gallery](GltfPbr_1.39.5_gallery.md)
-- [UsdPreview Gallery](UsdPreviewSurface_1.39.5_gallery.md)
+- [OpenPBR Gallery](docs/OpenPbr_1.39.5_gallery.md) 
+- [Standard Surface Gallery](docs/StandardSurface_1.39.5_gallery.md)
+- [glTF Gallery](docs/GltfPbr_1.39.5_gallery.md)
+- [UsdPreview Gallery](docs/UsdPreviewSurface_1.39.5_gallery.md)
 - [Disney Principled Gallery](DisneyPrincipled_1.39.5_gallery.md))
 
 
@@ -108,7 +108,7 @@ Below is an example using a material from `PolyHaven` using the same MaterialX d
 
 | USD Shader Ball | Arnold Shader Ball |
 | :--: | :--: |
-| <img width=100% src="look_example.png"> | <img width=100% src="look_example_2.png"> |
+| <img width=100% src="docs/look_example.png"> | <img width=100% src="docs/look_example_2.png"> |
 
 ---
 
