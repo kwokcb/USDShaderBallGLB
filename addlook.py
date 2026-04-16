@@ -27,7 +27,7 @@ def add_material_assignment(materialName, defaultName, look):
         prevew_name = 'preview' + str(count)
         assign = look.getMaterialAssign(prevew_name)
         count += 1
-    print('Adding material assignment for material:', materialName, 'with name:', prevew_name)
+    print('- Adding material assignment for material:', materialName, 'with name:', prevew_name)
     assign = look.addMaterialAssign(prevew_name, materialName)
     assign.setGeom('material_surface,Preview_Mesh')
     
@@ -43,8 +43,6 @@ def add_default_material(doc, materialName, shader_category='standard_surface'):
     shader_input.setValue(1.0)
     input = material.addInput('surfaceshader','surfaceshader')
     input.setConnectedNode(shader)
-
-
     return material
 
 def find_materials(doc):
@@ -112,57 +110,68 @@ def main():
     # create output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
 
-    for material_file in os.listdir(input_folder):
-        print('Checking file:', material_file)
-        if material_file.endswith(".mtlx"):
-            input_path = os.path.join(input_folder, material_file)
-            output_path = os.path.join(output_folder, material_file)
-            doc = mx.createDocument()            
-            print('Processing file:', input_path)
-            mx.readFromXmlFile(doc, input_path)
+    # Check if input folder is just a file:    
+    input_list = []
+    if input_folder and os.path.isfile(input_folder) and input_folder.endswith('.mtlx'):
+        input_list.append(input_folder)
+    else:
+        for material_file in os.listdir(input_folder):
+            if material_file.endswith(".mtlx"):
+                input_list.append(os.path.join(input_folder, material_file))
 
-            materials = find_materials(doc)
-            material_count = len(materials)
-            if material_count == 0:
-                print('No materials found in file:', input_path)
-                continue
+    for material_file in input_list:
+        input_path = material_file
+        output_path = os.path.join(output_folder, os.path.basename(material_file).replace('.mtlx', '_look.mtlx'))
+        doc = mx.createDocument()            
+        print('Processing file:', input_path)
+        mx.readFromXmlFile(doc, input_path)
 
-            write_separate_materials =  material_count > 1
+        materials = find_materials(doc)
+        material_count = len(materials)
+        if material_count == 0:
+            print('- No materials found in file:', input_path)
+            continue
+        print('- Found', material_count)
 
-            mat_doc = doc
-            mat_output_path = output_path
+        write_separate_materials =  material_count > 1
 
-            if not write_separate_materials:
-                # Create one default material
+        mat_doc = doc
+        mat_output_path = output_path
+
+        if not write_separate_materials:
+            # Create one default material
+            default_material = add_default_material(mat_doc, 'default', default_shader_category )
+            print('- Created default material', default_material.getName())
+            # Add a look
+            look = add_look(mat_doc)
+
+        for material in materials:
+            if write_separate_materials:
+                mat_output_path = output_path.replace('.mtlx', '_' + material.getName() + '_look.mtlx')
+                mat_doc = mx.createDocument()
+                mat_doc.copyContentFrom(doc)
                 default_material = add_default_material(mat_doc, 'default', default_shader_category )
-                # Add a look
+                print('- Created default material', default_material.getName())    
                 look = add_look(mat_doc)
-
-            for material in materials:
-                if write_separate_materials:
-                    mat_output_path = output_path.replace('.mtlx', '_' + material.getName() + '.mtlx')
-                    mat_doc = mx.createDocument()
-                    mat_doc.copyContentFrom(doc)
-                    default_material = add_default_material(mat_doc, 'default', default_shader_category )
-                    look = add_look(mat_doc)
-                    print('- Add assignment for material:', material.getName())
-                    add_material_assignment(material.getName(), default_material.getName(), look)
-                    print('Writing output file:', mat_output_path)
-                    mx.writeToXmlFile(mat_doc, mat_output_path)
-                    render_material(render_string, geometry_file, 
-                                    mat_output_path, 
-                                    os.path.splitext(mat_output_path)[0] + '.png',
-                                    input_folder)   
-                else:
-                    print('- Add assignment for material:', material.getName())
-                    add_material_assignment(material.getName(), default_material.getName(), look)
-
-            if not write_separate_materials:
-                print('Writing output file:', mat_output_path)
+                print('- Add assignment for material:', material.getName())
+                add_material_assignment(material.getName(), default_material.getName(), look)
                 mx.writeToXmlFile(mat_doc, mat_output_path)
-                render_material(render_string, geometry_file, mat_output_path, 
+                print('Wrote output file:', mat_output_path)
+                render_material(render_string, geometry_file, 
+                                mat_output_path, 
                                 os.path.splitext(mat_output_path)[0] + '.png',
-                                input_folder)
+                                input_folder)   
+            else:
+                print('- Add assignment for material:', material.getName())
+                add_material_assignment(material.getName(), default_material.getName(), look)
+
+        if not write_separate_materials:
+            mx.writeToXmlFile(mat_doc, mat_output_path)
+            print('Wrote output file:', mat_output_path)
+            render_material(render_string, geometry_file, mat_output_path, 
+                            os.path.splitext(mat_output_path)[0] + '.png',
+                            input_folder)
+            
            
 if __name__ == "__main__":
     main()
