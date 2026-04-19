@@ -97,7 +97,7 @@ MaterialX documents and rendered images can be found in the `*_1.39.5` subfolder
 - [Standard Surface Gallery](docs/StandardSurface_1.39.5_gallery.md)
 - [glTF Gallery](docs/GltfPbr_1.39.5_gallery.md)
 - [UsdPreview Gallery](docs/UsdPreviewSurface_1.39.5_gallery.md)
-- [Disney Principled Gallery](DisneyPrincipled_1.39.5_gallery.md))
+- [Disney Principled Gallery](docs/DisneyPrincipled_1.39.5_gallery.md))
 
 
 #### 2.5 Rendering General Material Assets
